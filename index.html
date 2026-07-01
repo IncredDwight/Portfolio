@@ -4,45 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yaroslav's Portfolio</title>
-
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     background: #111;
     color: white;
     font-family: Arial, sans-serif;
     min-height: 100vh;
 }
-
 header {
     text-align: center;
-    padding: 60px 20px;
+    padding: 60px 20px 40px;
 }
-
 header h1 {
     font-size: 3rem;
     margin-bottom: 10px;
 }
-
 header p {
     color: #aaa;
     font-size: 1.1rem;
 }
-
-#projects {
+.category {
     width: min(1400px, 95%);
-    margin: auto;
+    margin: 0 auto;
+    padding-bottom: 56px;
+}
+.category-header {
+    margin-bottom: 20px;
+    padding-left: 4px;
+    border-left: 3px solid #444;
+    padding-left: 16px;
+}
+.category-header h2 {
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+}
+.category-header p {
+    color: #888;
+    font-size: 0.95rem;
+}
+.project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 24px;
-    padding-bottom: 60px;
 }
-
 .project-card {
     background: #1b1b1b;
     border-radius: 16px;
@@ -51,12 +60,10 @@ header p {
     transition: transform .2s ease, box-shadow .2s ease;
     border: 1px solid #2c2c2c;
 }
-
 .project-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 10px 30px rgba(0,0,0,.4);
 }
-
 .browser-bar {
     background: #2a2a2a;
     padding: 12px;
@@ -64,134 +71,204 @@ header p {
     gap: 8px;
     align-items: center;
 }
-
 .dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
 }
-
 .dot.red {
     background: #ff5f56;
 }
-
 .dot.yellow {
     background: #ffbd2e;
 }
-
 .dot.green {
     background: #27c93f;
 }
-
 .project-image {
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     display: block;
 }
-
 .project-content {
     padding: 20px;
 }
-
 .project-content h2 {
     margin-bottom: 10px;
+    font-size: 1.2rem;
 }
-
 .project-content p {
     color: #bbb;
     line-height: 1.5;
     margin-bottom: 16px;
 }
-
 .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
-
 .tag {
     background: #2a2a2a;
     padding: 6px 10px;
     border-radius: 999px;
     font-size: 0.85rem;
 }
+
+/* Coming soon placeholder cards */
+.project-card.placeholder {
+    cursor: default;
+    opacity: 0.55;
+}
+.project-card.placeholder:hover {
+    transform: none;
+    box-shadow: none;
+}
+.placeholder-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(
+        45deg,
+        #1f1f1f,
+        #1f1f1f 10px,
+        #232323 10px,
+        #232323 20px
+    );
+    color: #555;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
 </style>
 </head>
 <body>
-
 <header>
     <h1>Yaroslav's Portfolio</h1>
-    <p>Projects built with JavaScript, Node.js, Socket.IO, Three.js and more.</p>
+    <p>Projects built with JavaScript, Node.js, Socket.IO, Three.js, C++/OpenGL and more.</p>
 </header>
-
-<section id="projects"></section>
-
+<main id="categories"></main>
 <script>
-const projects = [
+const categories = [
     {
-        title: "Even Quad",
-        description: "Real-time multiplayer pattern recognition game.",
-        image: "images/EvenQuads.png",
-        url: "https://even-quad.onrender.com",
-        tags: ["JavaScript", "Node.js", "Socket.IO"]
+        title: "Qudit State Space Visualization",
+        description: "Geometric tools for exploring the state spaces of higher-dimensional quantum systems.",
+        projects: [
+            {
+                title: "2-Qubit Visualization",
+                description: "Interactive geometry visualization tool.",
+                image: "images/3DQudit.png",
+                url: "https://quantum.bard.edu/yv/3DVisualization",
+                tags: ["Three.js", "Geometry", "WebGL"]
+            },
+            {
+                title: "Qutrit Visualization",
+                description: "Interactive geometry visualization tool.",
+                image: "images/2DQudit.png",
+                url: "https://quantum.bard.edu/yv/2DVisualization",
+                tags: ["Three.js", "Geometry", "WebGL"]
+            }
+        ]
     },
     {
-        title: "2-Qubit visualization",
-        description: "Interactive geometry visualization tool.",
-        image: "images/3DQudit.png",
-        url: "https://quantum.bard.edu/yv/3DVisualization",
-        tags: ["Three.js", "Geometry", "WebGL"]
+        title: "Combinatorics & Even Quad Games",
+        description: "Pattern-matching and combinatorial games, online and multiplayer.",
+        projects: [
+            {
+                title: "Even Quad",
+                description: "Real-time multiplayer pattern recognition game.",
+                image: "images/EvenQuads.png",
+                url: "https://even-quad.onrender.com",
+                tags: ["JavaScript", "Node.js", "Socket.IO", "Combinatorics"]
+            },
+            {
+                title: "Quad visualizer",
+                description: "Making complex mathematical structure of even quads intuitive",
+                image: "images/QuadVisualizer.png",
+                url: "https://increddwight.github.io/card-game-bsri-2026/even-quads-visualizer/",
+                tags: ["Three.js", "Affine Geometry", "Combinatorics"],
+            },
+            {
+                title: "Projective Set",
+                description: "Making complex mathematical structure of projective set intuitive",
+                image: "images/ProjectiveSet.png",
+                url: "https://increddwight.github.io/card-game-bsri-2026/projective-set/",
+                tags: ["Three.js", "Projective Geometry", "Combinatorics"],
+            }
+        ]
     },
     {
-        title: "Qutrit visualization",
-        description: "Interactive geometry visualization tool.",
-        image: "images/2DQudit.png",
-        url: "https://quantum.bard.edu/yv/2DVisualization",
-        tags: ["Three.js", "Geometry", "WebGL"]
+        title: "Toric Code & Quantum Error Correction",
+        description: "Visualizations exploring topological qubits and error-correcting codes.",
+        projects: [
+            {
+                title: "Toric Code Visualization",
+                description: "Interactive visualization of the toric code, built in C++ with OpenGL.",
+                image: "images/ToricCode.png",
+                url: "",
+                tags: ["C++", "OpenGL"],
+                comingSoon: true
+            }
+        ]
     }
 ];
 
 // ---------- RENDER ----------
+const root = document.getElementById("categories");
 
-const container = document.getElementById("projects");
+categories.forEach(category => {
+    const section = document.createElement("section");
+    section.className = "category";
 
-projects.forEach(project => {
-    const card = document.createElement("div");
-    card.className = "project-card";
-
-    card.innerHTML = `
-        <div class="browser-bar">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-        </div>
-
-        <img
-            class="project-image"
-            src="${project.image}"
-            alt="${project.title}"
-        >
-
-        <div class="project-content">
-            <h2>${project.title}</h2>
-            <p>${project.description}</p>
-
-            <div class="tags">
-                ${project.tags.map(tag =>
-                    `<span class="tag">${tag}</span>`
-                ).join("")}
-            </div>
-        </div>
+    const headerEl = document.createElement("div");
+    headerEl.className = "category-header";
+    headerEl.innerHTML = `
+        <h2>${category.title}</h2>
+        <p>${category.description}</p>
     `;
+    section.appendChild(headerEl);
 
-    card.addEventListener("click", () => {
-        window.open(project.url, "_blank");
+    const grid = document.createElement("div");
+    grid.className = "project-grid";
+
+    category.projects.forEach(project => {
+        const card = document.createElement("div");
+        card.className = "project-card" + (project.comingSoon ? " placeholder" : "");
+
+        const imageHTML = project.comingSoon
+            ? `<div class="placeholder-image">Coming soon</div>`
+            : `<img class="project-image" src="${project.image}" alt="${project.title}">`;
+
+        card.innerHTML = `
+            <div class="browser-bar">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            ${imageHTML}
+            <div class="project-content">
+                <h2>${project.title}</h2>
+                <p>${project.description}</p>
+                <div class="tags">
+                    ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+                </div>
+            </div>
+        `;
+
+        if (!project.comingSoon && project.url) {
+            card.addEventListener("click", () => {
+                window.open(project.url, "_blank");
+            });
+        }
+
+        grid.appendChild(card);
     });
 
-    container.appendChild(card);
+    section.appendChild(grid);
+    root.appendChild(section);
 });
 </script>
-
 </body>
 </html>
